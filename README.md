@@ -1,4 +1,4 @@
-## Prposal Builder
+## Proposal Builder
 
 - User can add questions and answers.
 - Clipboard feature.
