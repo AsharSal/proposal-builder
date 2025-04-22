@@ -9,20 +9,45 @@
     <div class="fx-modal-toolbar">
       <!-- <button class="fx-icon-button fx-back-button">←</button> -->
       <div class="fx-toolbar-buttons">
-        <button class="fx-toolbar-button" data-tab="proposals">Proposals</button>
-        <button class="fx-toolbar-button" data-tab="clipboard">Clipboard</button>
-        <button class="fx-toolbar-button" data-tab="questions">Questions</button>
+        <button class="fx-toolbar-button" data-tab="proposals">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          Proposals
+        </button>
+        <button class="fx-toolbar-button" data-tab="clipboard">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          </svg>
+          Clipboard
+        </button>
+        <button class="fx-toolbar-button" data-tab="questions">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Questions
+        </button>
       </div>
-      <button class="fx-icon-button fx-close-button">
-        <svg width="20" height="20" viewBox="0 0 24 24">
-          <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      <div class="fx-window-controls">
+        <button class="fx-icon-button fx-maximize-button" title="Maximize">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="fx-icon-button fx-close-button" title="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div class="fx-modal-scrollable-content">
       <div class="fx-tab-content" id="proposals-tab" style="display: none;">
-        <p>Proposals tab content...</p>
+        <p>Proposals</p>
       </div>
       
       <div class="fx-tab-content" id="clipboard-tab">

@@ -1,5 +1,3 @@
-
-
 /* Floating icon */
 .fx-floating-icon {
   position: fixed;
@@ -79,6 +77,41 @@
   font-size: 14px;
   color:black;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid black;
+  margin-right: 4px;
+}
+
+.fx-toolbar-button svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+.fx-window-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.fx-maximize-button,
+.fx-close-button {
+  padding: 4px;
+  border: 1px solid black;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  color: #374151;
+}
+
+.fx-maximize-button:hover,
+.fx-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Scrollable content */
@@ -95,9 +128,9 @@
 }
 
 .fx-toolbar-button.active {
-  border-bottom: 2px solid #3b82f6;
-  font-weight: bold;
-  color: #3b82f6;
+  border-bottom: 2px solid black;
+  /* font-weight: bold; */
+  color: black;
 }
 .fx-tab-content {
   color:black;
@@ -141,7 +174,6 @@
   margin-top: 0.5em;
 }
 
-
 #fx-save-clipboard {
   margin-top: 0.5em;
   background-color: #3b82f6;
@@ -150,12 +182,17 @@
   padding: 0.5em 1em;
   border-radius: 6px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
+#fx-save-clipboard svg {
+  width: 18px;
+  height: 18px;
+}
 
-
-
-* Questions Tab Styles */
+/* Questions Tab Styles */
 #questions-list-view, #question-detail-view {
   width: 100%;
 }
