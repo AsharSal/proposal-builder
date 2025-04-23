@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Floating Modal Extension",
+  "name": "Upwork Helper",
   "version": "1.0.0",
-  "description": "Shows a floating icon with a modal",
+  "description": "Upwork helper",
   "action": {
     "default_icon": {
       "16": "icon16.png",
