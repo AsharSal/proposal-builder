@@ -20,6 +20,6 @@ npm run build
 - The extension should now be installed and ready to use! ENable the extension!!
 
 
-### watch Demo
+### watch Demo (v1.0)
 
 [![Watch the demo]](https://github.com/user-attachments/assets/bc8f29d2-8735-455a-af4e-0e00eabffc9e)
