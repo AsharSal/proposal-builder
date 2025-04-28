@@ -9,7 +9,7 @@ class FloatingIcon {
   private questionManager!: QuestionManager;
   private clipboardManager!: ClipboardManager;
   private isMaximized: boolean = false;
-  
+
   constructor() {
     this.loadModalContent()
       .then(() => {
@@ -29,7 +29,7 @@ class FloatingIcon {
       this.modalContent = '<div>Failed to load modal content</div>';
     }
   }
-  
+
   private createIcon(): void {
     this.icon = document.createElement('div');
     this.icon.className = 'fx-floating-icon';
@@ -41,7 +41,7 @@ class FloatingIcon {
     `;
     document.body.appendChild(this.icon);
   }
-  
+
   private createModal(): void {
     this.modal = document.createElement('div');
     this.modal.className = 'fx-modal-overlay';
@@ -80,10 +80,10 @@ class FloatingIcon {
         tabContents.forEach(tc => {
           tc.style.display = (tc.id === selectedTab) ? 'block' : 'none';
         });
-        
-        // If questions tab is selected, refresh the list
+
+        // If questions tab is selected, refresh the list of question items
         if (btn.dataset.tab === 'questions') {
-          this.questionManager.loadQuestions();
+          this.questionManager.loadQuestionItems();
         }
       });
     });
@@ -92,11 +92,36 @@ class FloatingIcon {
     if (maximizeButton) {
       maximizeButton.addEventListener('click', () => this.toggleMaximize());
     }
+
+    // Handle ESC key to close modal
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && this.modal.classList.contains('visible')) {
+        this.hideModal();
+      }
+    });
   }
 
   private initializeManagers(): void {
     this.questionManager = new QuestionManager(this.modal);
     this.clipboardManager = new ClipboardManager(this.modal);
+    
+    // Set up question monitoring for Upwork pages
+    if (window.location.hostname.includes('upwork.com')) {
+      // Wait for the page to fully load
+      setTimeout(() => {
+        this.questionManager.setupUpworkQuestionMonitoring();
+      }, 2000);
+    }
+
+    // Add message listener for communication with the autofill functionality
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.action === "autofillUpworkQuestion") {
+        // This will be called when autofill is activated
+        this.questionManager.autofillUpworkQuestion(message.item);
+        sendResponse({ success: true });
+      }
+      return true;
+    });
   }
 
   private showModal(): void {
@@ -118,7 +143,7 @@ class FloatingIcon {
     if (!modalBox) return;
 
     this.isMaximized = !this.isMaximized;
-    
+
     if (this.isMaximized) {
       modalBox.style.width = '95vw';
       modalBox.style.height = '95vh';

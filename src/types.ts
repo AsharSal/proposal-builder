@@ -1,11 +1,6 @@
 export interface QuestionItem {
-  title: string;
-  content: string;
-}
-
-export interface Question {
   id: string;
   title: string;
-  items: QuestionItem[];
+  content: string;
   createdAt: string;
 }
