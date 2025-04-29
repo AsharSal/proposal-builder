@@ -2,7 +2,7 @@ import './styles/styles.css';
 import { QuestionManager } from './managers/QuestionManager';
 import { ClipboardManager } from './managers/ClipboardManager';
 
-class FloatingIcon {
+class Content {
   private icon!: HTMLDivElement;
   private modal!: HTMLDivElement;
   private modalContent: string = '';
@@ -105,18 +105,19 @@ class FloatingIcon {
     this.questionManager = new QuestionManager(this.modal);
     this.clipboardManager = new ClipboardManager(this.modal);
     
-    // Set up question monitoring for Upwork pages
+    // Set up question monitoring and auto-fill for Upwork pages
     if (window.location.hostname.includes('upwork.com')) {
       // Wait for the page to fully load
       setTimeout(() => {
         this.questionManager.setupUpworkQuestionMonitoring();
+        if (document.querySelector('.fe-proposal-job-questions') || 
+            document.querySelector('.cover-letter-area')) {
+          this.questionManager.autofillAllUpworkQuestionsOnLoad();
+        }
       }, 2000);
     }
-
-    // Add message listener for communication with the autofill functionality
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.action === "autofillUpworkQuestion") {
-        // This will be called when autofill is activated
         this.questionManager.autofillUpworkQuestion(message.item);
         sendResponse({ success: true });
       }
@@ -156,4 +157,4 @@ class FloatingIcon {
   }
 }
 
-new FloatingIcon();
+new Content();
