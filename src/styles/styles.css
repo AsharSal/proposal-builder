@@ -15,32 +15,26 @@
 .fx-modal-overlay {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 600px; /* Increased from 400px to 600px for more space */
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
   z-index: 9999;
 }
 
 .fx-modal-overlay.visible {
-  opacity: 1;
-  visibility: visible;
+  transform: translateX(0);
 }
 
-/* Modal box */
+/* Modal box (now sidebar box) */
 .fx-modal-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  width: 100%;
+  height: 100%;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  width: 600px;
-  max-height: 80vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -122,6 +116,24 @@
   flex-grow: 1;
   width: 100%;
   box-sizing: border-box;
+  height: calc(100vh - 60px); /* Subtract toolbar height */
+  scrollbar-color: initial;
+  scrollbar-width: initial;
+  -webkit-overflow-scrolling: auto;
+}
+
+.fx-modal-scrollable-content::-webkit-scrollbar {
+  width: initial;
+  height: initial;
+}
+
+.fx-modal-scrollable-content::-webkit-scrollbar-track {
+  background: initial;
+}
+
+.fx-modal-scrollable-content::-webkit-scrollbar-thumb {
+  background: initial;
+  border-radius: initial;
 }
 
 .fx-modal-scrollable-content p {
@@ -202,7 +214,24 @@
   gap: 24px;
   width: 100%;
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: auto;
+  scrollbar-color: initial;
+  scrollbar-width: initial;
+  -webkit-overflow-scrolling: auto;
+}
+
+#questions-tab::-webkit-scrollbar {
+  width: initial;
+  height: initial;
+}
+
+#questions-tab::-webkit-scrollbar-track {
+  background: initial;
+}
+
+#questions-tab::-webkit-scrollbar-thumb {
+  background: initial;
+  border-radius: initial;
 }
 
 .fx-questions-container {

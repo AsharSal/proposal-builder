@@ -4,29 +4,28 @@ import { ClipboardManager } from './managers/ClipboardManager';
 
 class Content {
   private icon!: HTMLDivElement;
-  private modal!: HTMLDivElement;
-  private modalContent: string = '';
+  private sidebar!: HTMLDivElement;
+  private sidebarContent: string = '';
   private questionManager!: QuestionManager;
   private clipboardManager!: ClipboardManager;
-  private isMaximized: boolean = false;
 
   constructor() {
-    this.loadModalContent()
+    this.loadSidebarContent()
       .then(() => {
         this.createIcon();
-        this.createModal();
+        this.createSidebar();
         this.attachEventListeners();
         this.initializeManagers();
       });
   }
 
-  private async loadModalContent(): Promise<void> {
+  private async loadSidebarContent(): Promise<void> {
     try {
       const response = await fetch(chrome.runtime.getURL('modal.html'));
-      this.modalContent = await response.text();
+      this.sidebarContent = await response.text();
     } catch (error) {
-      console.error('Error loading modal content:', error);
-      this.modalContent = '<div>Failed to load modal content</div>';
+      console.error('Error loading sidebar content:', error);
+      this.sidebarContent = '<div>Failed to load sidebar content</div>';
     }
   }
 
@@ -42,34 +41,30 @@ class Content {
     document.body.appendChild(this.icon);
   }
 
-  private createModal(): void {
-    this.modal = document.createElement('div');
-    this.modal.className = 'fx-modal-overlay';
+  private createSidebar(): void {
+    this.sidebar = document.createElement('div');
+    this.sidebar.className = 'fx-modal-overlay';
 
-    const modalWrapper = document.createElement('div');
-    modalWrapper.setAttribute('role', 'dialog');
-    modalWrapper.setAttribute('aria-modal', 'true');
-    modalWrapper.innerHTML = this.modalContent;
+    const sidebarWrapper = document.createElement('div');
+    sidebarWrapper.setAttribute('role', 'complementary');
+    sidebarWrapper.setAttribute('aria-label', 'Tools Sidebar');
+    sidebarWrapper.innerHTML = this.sidebarContent;
 
-    this.modal.appendChild(modalWrapper);
-    document.body.appendChild(this.modal);
+    this.sidebar.appendChild(sidebarWrapper);
+    document.body.appendChild(this.sidebar);
   }
 
   private attachEventListeners(): void {
-    this.icon.addEventListener('click', () => this.showModal());
+    this.icon.addEventListener('click', () => this.toggleSidebar());
 
-    const closeButton = this.modal.querySelector('.fx-close-button');
+    const closeButton = this.sidebar.querySelector('.fx-close-button');
     if (closeButton) {
-      closeButton.addEventListener('click', () => this.hideModal());
+      closeButton.addEventListener('click', () => this.hideSidebar());
     }
 
-    this.modal.addEventListener('click', (event) => {
-      if (event.target === this.modal) this.hideModal();
-    });
-
     // Tabs
-    const toolbarButtons = this.modal.querySelectorAll<HTMLButtonElement>('.fx-toolbar-button');
-    const tabContents = this.modal.querySelectorAll<HTMLElement>('.fx-tab-content');
+    const toolbarButtons = this.sidebar.querySelectorAll<HTMLButtonElement>('.fx-toolbar-button');
+    const tabContents = this.sidebar.querySelectorAll<HTMLElement>('.fx-tab-content');
 
     toolbarButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -81,33 +76,25 @@ class Content {
           tc.style.display = (tc.id === selectedTab) ? 'block' : 'none';
         });
 
-        // If questions tab is selected, refresh the list of question items
         if (btn.dataset.tab === 'questions') {
           this.questionManager.loadQuestionItems();
         }
       });
     });
 
-    const maximizeButton = this.modal.querySelector('.fx-maximize-button');
-    if (maximizeButton) {
-      maximizeButton.addEventListener('click', () => this.toggleMaximize());
-    }
-
-    // Handle ESC key to close modal
+    // Handle ESC key to close sidebar
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && this.modal.classList.contains('visible')) {
-        this.hideModal();
+      if (event.key === 'Escape' && this.sidebar.classList.contains('visible')) {
+        this.hideSidebar();
       }
     });
   }
 
   private initializeManagers(): void {
-    this.questionManager = new QuestionManager(this.modal);
-    this.clipboardManager = new ClipboardManager(this.modal);
+    this.questionManager = new QuestionManager(this.sidebar);
+    this.clipboardManager = new ClipboardManager(this.sidebar);
     
-    // Set up question monitoring and auto-fill for Upwork pages
     if (window.location.hostname.includes('upwork.com')) {
-      // Wait for the page to fully load
       setTimeout(() => {
         this.questionManager.setupUpworkQuestionMonitoring();
         if (document.querySelector('.fe-proposal-job-questions') || 
@@ -116,6 +103,7 @@ class Content {
         }
       }, 2000);
     }
+
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.action === "autofillUpworkQuestion") {
         this.questionManager.autofillUpworkQuestion(message.item);
@@ -125,35 +113,20 @@ class Content {
     });
   }
 
-  private showModal(): void {
-    this.modal.classList.add('visible');
-    requestAnimationFrame(() => {
-      this.modal.style.opacity = '1';
-    });
-  }
-
-  private hideModal(): void {
-    this.modal.style.opacity = '0';
-    setTimeout(() => {
-      this.modal.classList.remove('visible');
-    }, 300);
-  }
-
-  private toggleMaximize(): void {
-    const modalBox = this.modal.querySelector<HTMLElement>('.fx-modal-box');
-    if (!modalBox) return;
-
-    this.isMaximized = !this.isMaximized;
-
-    if (this.isMaximized) {
-      modalBox.style.width = '95vw';
-      modalBox.style.height = '95vh';
-      modalBox.style.maxHeight = '95vh';
+  private toggleSidebar(): void {
+    if (this.sidebar.classList.contains('visible')) {
+      this.hideSidebar();
     } else {
-      modalBox.style.width = '600px';
-      modalBox.style.height = '';
-      modalBox.style.maxHeight = '80vh';
+      this.showSidebar();
     }
+  }
+
+  private showSidebar(): void {
+    this.sidebar.classList.add('visible');
+  }
+
+  private hideSidebar(): void {
+    this.sidebar.classList.remove('visible');
   }
 }
 
