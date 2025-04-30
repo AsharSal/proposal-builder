@@ -21,7 +21,7 @@ class Content {
 
   private async loadSidebarContent(): Promise<void> {
     try {
-      const response = await fetch(chrome.runtime.getURL('modal.html'));
+      const response = await fetch(chrome.runtime.getURL('sidebar.html'));
       this.sidebarContent = await response.text();
     } catch (error) {
       console.error('Error loading sidebar content:', error);
