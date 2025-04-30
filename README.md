@@ -21,4 +21,4 @@ npm run build
 
 ### watch Demo
 
-[![Watch the demo]](https://github.com/user-attachments/assets/bc8f29d2-8735-455a-af4e-0e00eabffc9e)
+[![Watch the demo]](https://github.com/user-attachments/assets/51d601e3-c764-44d0-9f4d-4a85810d749c)
