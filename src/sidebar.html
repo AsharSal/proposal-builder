@@ -66,8 +66,12 @@
         </div>
       </div>
       <div id="questions-tab" class="fx-tab-content" style="display: none;">
-        <div id="questions-container" class="fx-questions-container">
-          <!-- Questions will be dynamically added here -->
+        <div class="fx-search-container">
+          <input type="text" class="fx-question-search-input" placeholder="Search questions...">
+          <svg class="fx-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
         </div>
         <div class="fx-new-question-form">
           <input type="text" class="fx-question-title-input" placeholder="Question">
@@ -75,6 +79,9 @@
           <div class="fx-form-actions">
             <button id="fx-add-question" class="fx-create-button">Add Question</button>
           </div>
+        </div>
+        <div id="questions-container" class="fx-questions-container">
+          <!-- Questions will be dynamically added here -->
         </div>
       </div>
     </div>

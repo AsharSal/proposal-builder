@@ -500,3 +500,39 @@
 .fx-notification-hide {
   opacity: 0;
 }
+
+/* Search bar styles */
+.fx-search-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.fx-question-search-input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.fx-question-search-input:hover {
+  border-color: #cbd5e1;
+}
+
+.fx-question-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.fx-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
